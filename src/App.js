@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ExpenseItem from './components/ExpenseItem/ExpenseItem';
+import NewExpense from './components/NewExpense/NewExpense';
 import classes from './components/ExpenseItem/Expenses.css';
 import Card from './components/Card';
+import ExpenseFilter from './components/ExpenseFilter/ExpenseFilter';
 
 const App = () => {
 	const expenses = [
@@ -27,13 +29,34 @@ const App = () => {
 	];
 
 	let expenses_elements = expenses.map(elt => {
-		return <ExpenseItem date={elt.date} title={elt.title} amount={elt.amount} id={elt}/>
-	})
+		return <ExpenseItem date={elt.date} title={elt.title} amount={elt.amount} key={elt.id}/>
+	});
+
+	const addExpenseHandler = (expenseData) => {
+		console.log("expense data to add in app.js")
+		console.log(expenseData);
+		// expenses.append(expenseData);
+	};
+
+	const [filterYear, setFilterYear] = useState('2021');
+
+	const filterChangedHandler = (filterValue) => {
+		console.log("year selected in the dropdown, printed app.js");
+		console.log(filterValue);
+		setFilterYear(filterValue);
+		// expenses.filter(year=filterValue);
+	}
 
 	return (
 		<div>
 			  <h2>Save your money!</h2>
-			  <Card className="expenses">{expenses_elements}</Card>
+			  <NewExpense
+			  onSaveExpenseData={addExpenseHandler}/>
+			  <Card className="expenses">
+			  <ExpenseFilter
+			  onFilterChange={filterChangedHandler} selectedYear={filterYear}/>
+			  {expenses_elements}
+			  </Card>
 		</div>
 	);
 }
