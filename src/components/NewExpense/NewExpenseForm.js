@@ -49,7 +49,7 @@ const NewExpenseForm = (props) => {
 		// construct object
 		const expenseData = {
 			title: enteredTitle,
-			amount: enteredAmount,
+			amount: +enteredAmount,
 			date: new Date(enteredDate) // parse date string
 		}
 
@@ -62,6 +62,7 @@ const NewExpenseForm = (props) => {
 		setEnteredTitle('');
 		setEnteredAmount('');
 		setEnteredDate('');
+		props.hideAddExpense();
 	}
 
 	return(
@@ -92,6 +93,7 @@ const NewExpenseForm = (props) => {
 			</div>
 			<div>
 				<div className="new-expense__actions">
+					<button type="button" onClick={props.hideAddExpense}>Cancel</button>
 					<button type="submit">Add Expense</button>
 				</div>
 			</div>
